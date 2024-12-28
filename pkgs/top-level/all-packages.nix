@@ -3200,7 +3200,9 @@ with pkgs;
 
   tsm-client-withGui = callPackage ../by-name/ts/tsm-client/package.nix { enableGui = true; };
 
-  tracy-x11 = callPackage ../by-name/tr/tracy/package.nix { withWayland = false; };
+  tracy = callPackage ../by-name/tr/tracy/package.nix { withWayland = stdenv.isLinux; };
+  tracy-glfw = callPackage ../by-name/tr/tracy/package.nix { withWayland = false; };
+  tracy-wayland = callPackage ../by-name/tr/tracy/package.nix { withWayland = true; };
 
   uusi = haskell.lib.compose.justStaticExecutables haskellPackages.uusi;
 
@@ -6822,9 +6824,7 @@ with pkgs;
   cargo-bazel = callPackage ../development/tools/rust/cargo-bazel {
     inherit (darwin.apple_sdk.frameworks) Security;
   };
-  cargo-cache = callPackage ../development/tools/rust/cargo-cache {
-    inherit (darwin.apple_sdk.frameworks) Security;
-  };
+  cargo-cache = callPackage ../development/tools/rust/cargo-cache { };
   cargo-crev = callPackage ../development/tools/rust/cargo-crev {
     inherit (darwin.apple_sdk.frameworks) Security SystemConfiguration CoreFoundation;
   };
